@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>project shizz</title>
+<link rel="stylesheet" href="/style/layout.css"/>
+<link rel="stylesheet" href="/style/theme.css"/>
+<script src="/lib/jquery-2.1.1.min.js"></script>
+<script src="/lib/jquery.flot.min.js"></script>
+<script src="/lib/core.js"></script>
+<script src="/lib/charts.js"></script>
+<script src="/lib/log.js"></script>
+<script src="/lib/tweets.js"></script>
+</head>
+<body class="container_12">
+<h1>Pindakaas</h1>
+<div id="tweet" class="grid_8 vert_4"></div>
+
+<script>
+// create a rolling chart block
+block('#tweet').tweets({
+    memory: 10
+
+});
+
+// connect sample event to graph
+events.connect('tweet', '#tweet');
+</script>
+</body>
+</html>
