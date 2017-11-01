@@ -13,17 +13,38 @@
 </head>
 <body class="container_12">
 <h1>Pindakaas</h1>
-<div id="tweet" class="grid_8 vert_4"></div>
-
+<table style="width:100%">
+<tr>
+<td>
+<div id="tweet" class="grid_8 vert_10"></div></td>
+<td>
+<div id="swag" class="grid_8 vert_3"></div>
+<div id="sweg" class="grid_8 vert_3"></div>
+</td>
+</tr>
 <script>
 // create a rolling chart block
 block('#tweet').tweets({
-    memory: 10
+    memory: 500
 
 });
 
 // connect sample event to graph
 events.connect('tweet', '#tweet');
+</script>
+<script>
+block('#swag').tweets({
+    memory: 1
+    
+})
+events.connect('tweet','#swag');
+</script>
+<script>
+block('#sweg').tweets({
+    memory: 3
+    
+})
+events.connect('tweet','#sweg');
 </script>
 </body>
 </html>
