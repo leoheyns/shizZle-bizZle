@@ -1,14 +1,16 @@
 from sort import merge_pairs
 from eca import *
+import json
 
 from eca.generators import start_offline_tweets
 import datetime
 import textwrap
 
+root_content_path = 'test_static'
 
 @event('init')
 def setup(ctx, e):
-    start_offline_tweets('batatweets.txt', time_factor=None, event_name='chirp')
+    start_offline_tweets('batatweets.txt', time_factor=1000000, event_name='chirp')
 
 
 @event('chirp')
@@ -21,11 +23,13 @@ def tweet(ctx, e):
 
     # nicify text
     text = textwrap.fill(tweet['text'],initial_indent='    ', subsequent_indent='    ')
-    adjustranking(text.lower())
+    uranking = adjustranking(text.lower())
 
     # generate output
     output = "[{}] {} (@{}):\n{}".format(time, tweet['user']['name'], tweet['user']['screen_name'], text)
-    #emit('tweet', output)
+    emit('ranking', {
+        'text': uranking
+    });
 
 
 ulist = ["kub", "eur", "ru", "rug", "tu delft", "tue", "ul", "um", "ut", "uu", "uva", "vu", "wu"]
@@ -58,16 +62,20 @@ def uwordsearch(uid, text): #returns 1 if a word from the u
     return 0
 
 #(not str.isalpha(text[text.find(uwords[uid][i])-1]) or not str.isalpha(text[text.find(uwords[uid][i])+len(uwords[uid][i])]))
+
+
 def adjustranking(text): #adjusts current ranking
     global ranking
     rankingtemp = [ranking[i] + uwordsearch(i, text) for i in range(len(ulist)-1)]
     if ranking != rankingtemp:
         ranking = rankingtemp
-        print(orderedranking()) #emits new ordered ranking if rankings changed
     ranking = rankingtemp
+    return orderedranking()
+
 
 def orderedranking():
     rank = merge_pairs([(ranking[i], uwords[i][0]) for i in range(len(ulist)-1)])
     rank.reverse()
     return rank
 
+adjustranking("hoi")
