@@ -12,10 +12,12 @@ def tweet_clean(tweet):
     return tweet
 
 def tweet_filter(tweet, filter):
-    if tweet.find(filter) == -1:
-        greenlight = False
-    else:
+    text = tweet['text']
+    name = tweet['name']
+    if (filter in text or filter in name):
         greenlight = True
+    else:
+        greenlight = False
     return greenlight
 
 def batacheck(tweet):
