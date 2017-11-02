@@ -19,15 +19,20 @@ def setup(ctx, e):
 def echo(ctx, e):
     tweet = e.data
     if ctx.filterword != None and tweet_filter(tweet, ctx.filterword):
-        print(ctx.filterword)
-        emit ('tweet', e.data)
-    elif ctx.filterword == None:
-        emit ('tweet', e.data)
+        emit ('swek', e.data)
+        
+@event('tweet')
+def epic(ctx, e):
+    emit ('tweet', e.data)
+    tweet = e.data
+    if tweet['user']['screen_name'] == 'Batavierenrace':
+        emit('swag', tweet)
+    
+    
     
 @event('word')
 def set_filter(ctx, e):
     ctx.filterword = e.data['word']
-    print (ctx.filterword)
 
 @event('tweet')
 def tweet(ctx, e):

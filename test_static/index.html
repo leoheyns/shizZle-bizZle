@@ -23,27 +23,21 @@ background-color: #00aced;
 <tr>
 <td>
 tweets from the race<p>
-<div id='pinde' class='grid_6 vert_10'>
-<div id='filter' class='grid_6 ver_1'>
-<form>
-    <textarea name='word' style='width: 100%'></textarea>
-    <input type='submit' value='filter on a word'/>
-</form>
-</div>
-<div id="tweet" class="grid_6 vert_9"></div>
-</div>
+<div id="tweet" class="grid_6 vert_10"></div>
 </td>
 <td>
 tweets from the organisation<p>
 <div id="swag" class="grid_6 vert_10"></div>
 </td>
 <td>
-tweets from your team<p>
+tweets with filter<p>
 <div id='pinda' class='grid_6 vert_10'>
+<div id='filter' class='grid_6 ver_1'>
 <form>
-    <textarea name='team' style='width: 100%'></textarea>
-    <input type='submit' value='filter on team'/>
+    <textarea name='word' style='width: 100%'></textarea>
+    <input type='submit' value='filter on a word'/>
 </form>
+</div>
 <div id="sweg" class="grid_6 vert_9"></div>
 </div>
 </td>
@@ -125,17 +119,17 @@ events.connect('tweet', '#tweet');
 </script>
 <script>
 block('#swag').tweets({
-    memory: 9
+    memory: 7
     
 })
-events.connect('tweet','#swag');
+events.connect('swag','#swag');
 </script>
 <script>
 block('#sweg').tweets({
-    memory: 5
+    memory: 800
     
 })
-events.connect('tweet','#sweg');
+events.connect('swek','#sweg');
 </script>
 <script>
 var eventSource = new EventSource('/events');
