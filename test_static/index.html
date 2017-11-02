@@ -16,22 +16,26 @@
 <table style="width:100%">
 <tr>
 <td>
+tweets from the race<p>
 <div id="tweet" class="grid_7 vert_10"></div></td>
 <td>
-<div id="swag" class="grid_7 vert_9"></div>
+tweets from the organisation<p>
+<div id="swag" class="grid_7 vert_10"></div>
 </td>
 <td>
-<div id="sweg" class="grid_7 vert_8"></div>
+tweets from your team<p>
+<div id="sweg" class="grid_6 vert_10"></div>
 </td>
 <td>
-<h1>this is just a placeholder</h1>
+rank of your university<p>
+<div id="baklava" class="grid_4 vert_10"></div>
 </td>
 </tr>
 </table>
 <script>
 // create a rolling chart block
 block('#tweet').tweets({
-    memory: 500
+    memory: 1000000
 
 });
 
@@ -40,14 +44,14 @@ events.connect('tweet', '#tweet');
 </script>
 <script>
 block('#swag').tweets({
-    memory: 1
+    memory: 9
     
 })
 events.connect('tweet','#swag');
 </script>
 <script>
 block('#sweg').tweets({
-    memory: 3
+    memory: 5
     
 })
 events.connect('tweet','#sweg');
