@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>project shizz</title>
+<title>Twitter Dashboard group 5 UTWENTE</title>
 <link rel="stylesheet" href="/style/layout.css"/>
 <link rel="stylesheet" href="/style/theme.css"/>
 <script src="/lib/jquery-2.1.1.min.js"></script>
@@ -10,6 +10,7 @@
 <script src="/lib/charts.js"></script>
 <script src="/lib/log.js"></script>
 <script src="/lib/tweets.js"></script>
+<script src="/lib/form.js"></script>
 </head>
 <body class="container_12">
 <h1>Pindakaas</h1>
@@ -28,18 +29,76 @@ tweets from your team<p>
 </td>
 <td>
 rank of your university<p>
-<div id="baklava" class="grid_4 vert_10"></div>
+<p id="test"></p>
+<table>
+  <tr>
+    <th>points</th>
+    <th>university</th>
+  </tr>
+  <tr>
+    <td id = "r0p"></td>
+    <td id = "r0u"></td>
+  </tr>
+  <tr>
+    <td id = "r1p"></td>
+    <td id = "r1u"></td>
+  </tr>
+    <tr>
+    <td id = "r2p"></td>
+    <td id = "r2u"></td>
+  </tr>
+  <tr>
+    <td id = "r3p"></td>
+    <td id = "r3u"></td>
+  </tr>
+  <tr>
+    <td id = "r4p"></td>
+    <td id = "r4u"></td>
+  </tr>
+  <tr>
+    <td id = "r5p"></td>
+    <td id = "r5u"></td>
+  </tr>
+  <tr>
+    <td id = "r6p"></td>
+    <td id = "r6u"></td>
+  </tr>
+  <tr>
+    <td id = "r7p"></td>
+    <td id = "r7u"></td>
+  </tr>
+  <tr>
+    <td id = "r8p"></td>
+    <td id = "r8u"></td>
+  </tr>
+  <tr>
+    <td id = "r9p"></td>
+    <td id = "r9u"></td>
+  </tr>
+  <tr>
+    <td id = "r10p"></td>
+    <td id = "r10u"></td>
+  </tr>
+  <tr>
+    <td id = "r11p"></td>
+    <td id = "r11u"></td>
+  </tr>
+  <tr>
+    <td id = "r12p"></td>
+    <td id = "r12u"></td>
+  </tr>
+</table>
 </td>
 </tr>
 </table>
+
 <script>
-// create a rolling chart block
 block('#tweet').tweets({
     memory: 1000000
 
 });
 
-// connect sample event to graph
+// connect sample event to tweet list
 events.connect('tweet', '#tweet');
 </script>
 <script>
@@ -55,6 +114,42 @@ block('#sweg').tweets({
     
 })
 events.connect('tweet','#sweg');
+</script>
+<script>
+var eventSource = new EventSource('/events');
+eventSource.addEventListener("ranking", function(e) {
+    ranking = JSON.parse(e.data)["text"]
+    console.log(ranking)
+    document.getElementById("r0p").innerHTML = ranking[0][0]
+	document.getElementById("r0u").innerHTML = ranking[0][1]
+	document.getElementById("r1p").innerHTML = ranking[1][0]
+	document.getElementById("r1u").innerHTML = ranking[1][1]
+	document.getElementById("r2p").innerHTML = ranking[2][0]
+	document.getElementById("r2u").innerHTML = ranking[2][1]
+	document.getElementById("r3p").innerHTML = ranking[3][0]
+	document.getElementById("r3u").innerHTML = ranking[3][1]
+	document.getElementById("r4p").innerHTML = ranking[4][0]
+	document.getElementById("r4u").innerHTML = ranking[4][1]
+	document.getElementById("r5p").innerHTML = ranking[5][0]
+	document.getElementById("r5u").innerHTML = ranking[5][1]
+	document.getElementById("r6p").innerHTML = ranking[6][0]
+	document.getElementById("r6u").innerHTML = ranking[6][1]
+	document.getElementById("r7p").innerHTML = ranking[7][0]
+	document.getElementById("r7u").innerHTML = ranking[7][1]
+	document.getElementById("r8p").innerHTML = ranking[8][0]
+	document.getElementById("r8u").innerHTML = ranking[8][1]
+	document.getElementById("r9p").innerHTML = ranking[9][0]
+	document.getElementById("r9u").innerHTML = ranking[9][1]
+	document.getElementById("r10p").innerHTML = ranking[10][0]
+	document.getElementById("r10u").innerHTML = ranking[10][1]
+	document.getElementById("r11p").innerHTML = ranking[11][0]
+	document.getElementById("r11u").innerHTML = ranking[11][1]
+	//document.getElementById(r12p) = ranking[12][0]
+	//document.getElementById(r12u) = ranking[12][1]
+}, false)
+function updatetable(ranking){
+
+}
 </script>
 </body>
 </html>
