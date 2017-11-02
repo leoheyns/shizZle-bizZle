@@ -1,4 +1,4 @@
-swear = ['fuck','shit','nigger','nikker','kanker','cancer','kut','klere','kolere','cholera','tering','typhus', 'tyfus','pussy','ass','butt','dick','wtf','snikkel','master race','cock','piemel','pik','cunt','neger','thijs konst']
+swear = ['fuck','shit','nigger','nikker','kanker','cancer','kut','klere','kolere','cholera','tering','typhus', 'tyfus','pussy','butt','dick','wtf','snikkel','master race','cock','piemel','pik','cunt','neger','thijs konst']
 blacklist = [realDonaldTrump,]
 
 def tweet_clean(tweet):
@@ -22,7 +22,7 @@ def tweet_filter(tweet, filter):
 
 def batacheck(tweet):
     user = tweet['user']
-    if user == '"'+batavierenrace+'"':
+    if user == '"batavierenrace"':
         batalight = True
     else:
         batalight = False
@@ -32,7 +32,7 @@ def blacklist_check(tweet):
     i = 0
     user = tweet['user']
     while i < len(blacklist):
-        blocked = '"'+blacklist[0]+'"'
+        blocked = '\"'+blacklist[0]+'\"'
         if user == blocked:
             blacklight = False
             return blacklight
