@@ -11,24 +11,43 @@
 <script src="/lib/log.js"></script>
 <script src="/lib/tweets.js"></script>
 <script src="/lib/form.js"></script>
+<style>
+body {
+background-color: #00aced;
+}
+</style>
 </head>
 <body class="container_12">
-<h1>Pindakaas</h1>
+<h1>Batavierenrace</h1>
 <table style="width:100%">
 <tr>
 <td>
 tweets from the race<p>
-<div id="tweet" class="grid_7 vert_10"></div></td>
+<div id='pinde' class='grid_6 vert_10'>
+<form>
+    <textarea name='word' style='width: 100%'></textarea>
+    <input type='submit' value='filter on a word'/>
+</form>
+<div id="tweet" class="grid_6 vert_9"></div>
+</div>
+</td>
 <td>
 tweets from the organisation<p>
-<div id="swag" class="grid_7 vert_10"></div>
+<div id="swag" class="grid_6 vert_10"></div>
 </td>
 <td>
 tweets from your team<p>
-<div id="sweg" class="grid_6 vert_10"></div>
+<div id='pinda' class='grid_6 vert_10'>
+<form>
+    <textarea name='team' style='width: 100%'></textarea>
+    <input type='submit' value='filter on team'/>
+</form>
+<div id="sweg" class="grid_6 vert_9"></div>
+</div>
 </td>
 <td>
 rank of your university<p>
+<div id="cool" class="grid_3 vert_10">
 <p id="test"></p>
 <table>
   <tr>
@@ -88,6 +107,7 @@ rank of your university<p>
     <td id = "r12u"></td>
   </tr>
 </table>
+</div>
 </td>
 </tr>
 </table>
@@ -144,12 +164,17 @@ eventSource.addEventListener("ranking", function(e) {
 	document.getElementById("r10u").innerHTML = ranking[10][1]
 	document.getElementById("r11p").innerHTML = ranking[11][0]
 	document.getElementById("r11u").innerHTML = ranking[11][1]
-	//document.getElementById(r12p) = ranking[12][0]
-	//document.getElementById(r12u) = ranking[12][1]
+	document.getElementById("r12p").innerHTML = ranking[12][0]
+	document.getElementById("r12u").innerHTML = ranking[12][1]
 }, false)
 function updatetable(ranking){
 
 }
+</script>
+<script> 
+block('#form'.form({
+target: '/api/word'
+});
 </script>
 </body>
 </html>

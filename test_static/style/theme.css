@@ -1,6 +1,6 @@
 /* Basic style & theme*/
 body {
-    font-family: sans-serif;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
 }
 
 p {
@@ -32,12 +32,12 @@ pre {
 
 .tweet-list.stream-items {
     position: relative;
-    background-color: #fff;
+    background-color: #FFF;
     list-style: none;
-    color: #333;
+    color: #555;
     font-size: 14px;
     line-height: 18px;
-    font-family: arial, sans-serif;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 

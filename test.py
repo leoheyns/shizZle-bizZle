@@ -1,6 +1,7 @@
 from sort import merge_pairs
 from eca import *
 import json
+import eca.http
 
 from eca.generators import start_offline_tweets
 import datetime
@@ -15,8 +16,9 @@ def setup(ctx, e):
 
 @event('tweet')
 def echo(ctx, e):
-    emit('tweet', e.data)
-    
+    tweet = e.data
+    output = tweet_clean(tweet)
+    emit ('tweet', output)
 @event('init')
 def setup(ctx, e):
     start_offline_tweets('data/batatweets.txt', time_factor=100000, event_name='chirp')
@@ -30,7 +32,7 @@ def tweet(ctx, e):
     time = datetime.datetime.strptime(tweet['created_at'], '%a %b %d %H:%M:%S %z %Y')
 
     # nicify text
-    text = textwrap.fill(tweet['text'],initial_indent='    ', subsequent_indent='    ')
+    text = textwrap.fill(tweet['text'], initial_indent='    ', subsequent_indent='    ')
     uranking = adjustranking(text.lower())
 
     # generate output
@@ -40,13 +42,14 @@ def tweet(ctx, e):
     });
 
 
-ulist = ["kub", "eur", "ru", "rug", "tu delft", "tue", "ul", "um", "ut", "uu", "uva", "vu", "wu"]
+ulist = ["tilburg", "erasmus", "radboud", "rijksuniversiteit groningen", "tu delft", "tu eindhoven", "leiden", "maastricht", "utwente", "utrecht", "universiteit van amsterdam", "vrije universiteit", "boeren"]
 uwords = [["tilburg", "kub"], ["erasmus", "rotterdam", "eur"], ["radboud", "nijmegen", "ru"], ["rijksuniversiteit", "groningen", "rug"], ["tudelft", "delft", "tu delft"], ["eindhoven", "tue"], ["leiden", "ul"], ["maastricht", "um"], ["utwente", "enschede", "ut"], ["utrecht", "uu"], ["universiteit van amsterdam", "amsterdam", "uva"], ["vrije universiteit", "amsterdam", "vu"], ["wageningen", "wu"]]
 
-ranking = [0 for x in range(len(ulist)-1)]
-print(ranking)
+ranking = [0 for x in range(len(ulist))]
 
-
+def add_request_handlers(httpd):
+    httpd.add_route('api/word', eca.http.GenerateEvent('word'), methods=['POST'])
+    
 def newranking(uid):
     global ranking
     ranking[uid] += 1
@@ -71,10 +74,9 @@ def uwordsearch(uid, text): #returns 1 if a word from the u
 
 #(not str.isalpha(text[text.find(uwords[uid][i])-1]) or not str.isalpha(text[text.find(uwords[uid][i])+len(uwords[uid][i])]))
 
-
 def adjustranking(text): #adjusts current ranking
     global ranking
-    rankingtemp = [ranking[i] + uwordsearch(i, text) for i in range(len(ulist)-1)]
+    rankingtemp = [ranking[i] + uwordsearch(i, text) for i in range(len(ulist))]
     if ranking != rankingtemp:
         ranking = rankingtemp
     ranking = rankingtemp
@@ -82,8 +84,40 @@ def adjustranking(text): #adjusts current ranking
 
 
 def orderedranking():
-    rank = merge_pairs([(ranking[i], uwords[i][0]) for i in range(len(ulist)-1)])
+    rank = merge_pairs([(ranking[i], ulist[i]) for i in range(len(ulist))])
     rank.reverse()
     return rank
+    
+swear = ['fuck','shit','nigger','nikker','kanker','cancer','kut','klere','kolere','cholera','tering','typhus', 'tyfus','pussy','ass','butt','dick','wtf','snikkel','master race','cock','piemel','pik','cunt','neger','thijs konst']
+blacklist = ['realDonaldTrump']
 
-adjustranking("hoi")
+def tweet_clean(tweet):
+    i = 0
+    text = tweet['text']
+    cleantext = text
+    while i < len(swear):
+        cleantext = cleantext.replace(swear[i],'bobba')
+        i+=1
+    tweet['text'] = cleantext
+    return tweet
+
+def batacheck(tweet):
+    user = tweet['user']
+    if user == '"'+batavierenrace+'"':
+        batalight = True
+    else:
+        batalight = False
+    return batalight
+    
+def blacklist_check(tweet):
+    i = 0
+    user = tweet['user']
+    while i < len(blacklist):
+        blocked = '"'+blacklist[0]+'"'
+        if user == blocked:
+            blacklight = False
+            return blacklight
+        else:
+            i+=1
+    blacklight = True
+    return blacklight
