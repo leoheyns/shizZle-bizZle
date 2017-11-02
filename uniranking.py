@@ -10,7 +10,11 @@ root_content_path = 'test_static'
 
 @event('init')
 def setup(ctx, e):
-    start_offline_tweets('batatweets.txt', time_factor=1000000, event_name='chirp')
+    start_offline_tweets('bata_2014.txt', time_factor=1000000, event_name='chirp')
+    uranking = adjustranking("".lower())
+    emit('ranking', {
+        'text': uranking
+    });
 
 
 @event('chirp')
@@ -22,7 +26,7 @@ def tweet(ctx, e):
     time = datetime.datetime.strptime(tweet['created_at'], '%a %b %d %H:%M:%S %z %Y')
 
     # nicify text
-    text = textwrap.fill(tweet['text'],initial_indent='    ', subsequent_indent='    ')
+    text = textwrap.fill(tweet['text'], initial_indent='    ', subsequent_indent='    ')
     uranking = adjustranking(text.lower())
 
     # generate output
@@ -32,11 +36,10 @@ def tweet(ctx, e):
     });
 
 
-ulist = ["kub", "eur", "ru", "rug", "tu delft", "tue", "ul", "um", "ut", "uu", "uva", "vu", "wu"]
+ulist = ["tilburg", "erasmus", "radboud", "rijksuniversiteit groningen", "tu delft", "tu eindhoven", "leiden", "maastricht", "utwente", "utrecht", "universiteit van amsterdam", "vrije universiteit", "boeren"]
 uwords = [["tilburg", "kub"], ["erasmus", "rotterdam", "eur"], ["radboud", "nijmegen", "ru"], ["rijksuniversiteit", "groningen", "rug"], ["tudelft", "delft", "tu delft"], ["eindhoven", "tue"], ["leiden", "ul"], ["maastricht", "um"], ["utwente", "enschede", "ut"], ["utrecht", "uu"], ["universiteit van amsterdam", "amsterdam", "uva"], ["vrije universiteit", "amsterdam", "vu"], ["wageningen", "wu"]]
 
-ranking = [0 for x in range(len(ulist)-1)]
-print(ranking)
+ranking = [0 for x in range(len(ulist))]
 
 
 def newranking(uid):
@@ -66,7 +69,7 @@ def uwordsearch(uid, text): #returns 1 if a word from the u
 
 def adjustranking(text): #adjusts current ranking
     global ranking
-    rankingtemp = [ranking[i] + uwordsearch(i, text) for i in range(len(ulist)-1)]
+    rankingtemp = [ranking[i] + uwordsearch(i, text) for i in range(len(ulist))]
     if ranking != rankingtemp:
         ranking = rankingtemp
     ranking = rankingtemp
@@ -74,8 +77,6 @@ def adjustranking(text): #adjusts current ranking
 
 
 def orderedranking():
-    rank = merge_pairs([(ranking[i], uwords[i][0]) for i in range(len(ulist)-1)])
+    rank = merge_pairs([(ranking[i], ulist[i]) for i in range(len(ulist))])
     rank.reverse()
     return rank
-
-adjustranking("hoi")
