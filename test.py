@@ -12,18 +12,24 @@ root_content_path = 'test_static'
 @event('init')
 def setup(ctx, e):
     # start the offline tweet stream
-    start_offline_tweets('data/batatweets.txt', time_factor=100000)
+    start_offline_tweets('data/batatweets.txt', time_factor=100000, event_name='tweet')
+    ctx.filterword = None
 
 @event('tweet')
 def echo(ctx, e):
     tweet = e.data
-    output = tweet_clean(tweet)
-    emit ('tweet', output)
-@event('init')
-def setup(ctx, e):
-    start_offline_tweets('data/batatweets.txt', time_factor=100000, event_name='chirp')
+    if ctx.filterword != None and tweet_filter(tweet, ctx.filterword):
+        print(ctx.filterword)
+        emit ('tweet', e.data)
+    elif ctx.filterword == None:
+        emit ('tweet', e.data)
+    
+@event('word')
+def set_filter(ctx, e):
+    ctx.filterword = e.data['word']
+    print (ctx.filterword)
 
-@event('chirp')
+@event('tweet')
 def tweet(ctx, e):
     # we receive a tweet
     tweet = e.data
@@ -48,7 +54,7 @@ uwords = [["tilburg", "kub"], ["erasmus", "rotterdam", "eur"], ["radboud", "nijm
 ranking = [0 for x in range(len(ulist))]
 
 def add_request_handlers(httpd):
-    httpd.add_route('api/word', eca.http.GenerateEvent('word'), methods=['POST'])
+    httpd.add_route('/api/word', eca.http.GenerateEvent('word'), methods=['POST'])
     
 def newranking(uid):
     global ranking
@@ -88,7 +94,7 @@ def orderedranking():
     rank.reverse()
     return rank
     
-swear = ['fuck','shit','nigger','nikker','kanker','cancer','kut','klere','kolere','cholera','tering','typhus', 'tyfus','pussy','ass','butt','dick','wtf','snikkel','master race','cock','piemel','pik','cunt','neger','thijs konst']
+swear = ['fuck','shit','nigger','nikker','kanker','cancer','kut','klere','kolere','cholera','tering','typhus', 'tyfus','pussy','butt','dick','wtf','snikkel','master race','cock','piemel','pik','cunt','neger','thijs konst']
 blacklist = ['realDonaldTrump']
 
 def tweet_clean(tweet):
@@ -100,6 +106,14 @@ def tweet_clean(tweet):
         i+=1
     tweet['text'] = cleantext
     return tweet
+
+def tweet_filter(tweet, filter):
+    text = tweet['text']
+    if (filter in text):
+        greenlight = True
+    else:
+        greenlight = False
+    return greenlight
 
 def batacheck(tweet):
     user = tweet['user']

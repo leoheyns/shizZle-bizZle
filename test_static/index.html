@@ -24,10 +24,12 @@ background-color: #00aced;
 <td>
 tweets from the race<p>
 <div id='pinde' class='grid_6 vert_10'>
+<div id='filter' class='grid_6 ver_1'>
 <form>
     <textarea name='word' style='width: 100%'></textarea>
     <input type='submit' value='filter on a word'/>
 </form>
+</div>
 <div id="tweet" class="grid_6 vert_9"></div>
 </div>
 </td>
@@ -172,7 +174,7 @@ function updatetable(ranking){
 }
 </script>
 <script> 
-block('#form'.form({
+block('#filter').form({
 target: '/api/word'
 });
 </script>

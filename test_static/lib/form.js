@@ -4,7 +4,7 @@ block.fn.form = function(config) {
         target: null,
         callback: function() {}
     }, config);
-
+    console.log(config);
     // see if we can grab the action from the form tag
     if(options.target === null) {
         var action = this.$element.find("form").attr('action');
