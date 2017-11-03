@@ -57,8 +57,8 @@ def tweet(ctx, e):
     });
 
 
-ulist = ["tilburg", "erasmus", "radboud", "rijksuniversiteit groningen", "tu delft", "tu eindhoven", "leiden", "maastricht", "utwente", "utrecht", "universiteit van amsterdam", "vrije universiteit", "boeren"]
-uwords = [["tilburg", "kub"], ["erasmus", "rotterdam", "eur"], ["radboud", "nijmegen", "ru"], ["rijksuniversiteit", "groningen", "rug"], ["tudelft", "delft", "tu delft"], ["eindhoven", "tue"], ["leiden", "ul"], ["maastricht", "um"], ["utwente", "enschede", "ut"], ["utrecht", "uu"], ["universiteit van amsterdam", "amsterdam", "uva"], ["vrije universiteit", "amsterdam", "vu"], ["wageningen", "wu"]]
+ulist = ["tilburg", "erasmus", "radboud", "rijksuniversiteit groningen", "tu Delft", "tu Eindhoven", "leiden", "maastricht", "Utwente", "utrecht", "UvA", "VU", "wageningen"]
+uwords = [["tilburg", "kub", "tilburgu"], ["erasmus", "rotterdam", "eur", "erasmusnieuws", "erasmusuni", "erasmussport", "erasmusalumni"], ["radboud", "nijmegen", "ru", "radboudSports", "runijmegen"], ["rijksuniversiteit", "groningen", "rug", "univgroningen"], ["tudelft", "delft", "tu delft"], ["eindhoven", "tue", "tueindhoven", "ssceindhoven"], ["leiden", "ul"], ["maastricht", "um"], ["utwente", "enschede", "ut", "twente"], ["utrecht", "uu"], ["universiteit van amsterdam", "amsterdam", "uva"], ["vrije universiteit", "amsterdam", "vu"], ["wageningen", "wu", "uniwageningen"]]
 
 ranking = [0 for x in range(len(ulist))]
 
