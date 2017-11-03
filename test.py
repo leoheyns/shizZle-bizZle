@@ -18,12 +18,16 @@ def setup(ctx, e):
 @event('tweet')
 def echo(ctx, e):
     tweet = e.data
+    print(ctx.filterword)
     if ctx.filterword != None and tweet_filter(tweet, ctx.filterword):
         emit ('swek', e.data)
         
 @event('tweet')
 def epic(ctx, e):
-    emit ('tweet', e.data)
+    tweet = e.data
+    output = tweet_clean(tweet)
+    emit ('tweet', output)
+    
     tweet = e.data
     if tweet['user']['screen_name'] == 'Batavierenrace':
         emit('swag', tweet)
@@ -99,7 +103,7 @@ def orderedranking():
     rank.reverse()
     return rank
     
-swear = ['fuck','shit','nigger','nikker','kanker','cancer','kut','klere','kolere','cholera','tering','typhus', 'tyfus','pussy','butt','dick','wtf','snikkel','master race','cock','piemel','pik','cunt','neger','thijs konst']
+swear = ['fuck','shit','nigger','nikker','kut','klere','kolere','cholera','tering','typhus', 'tyfus','pussy','butt','dick','wtf','snikkel','master race','cock','piemel','pik','cunt','neger','thijs konst']
 blacklist = ['realDonaldTrump']
 
 def tweet_clean(tweet):

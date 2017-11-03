@@ -1,6 +1,16 @@
 /* Basic style & theme*/
 body {
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-family: sans-serif;
+    background: #5A5454;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #333333 , #5A5454);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #333333, #5A5454); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+h1 {
+    color: #ffffff;
+    font-size: 20px;
+    font: 400 60px/1.6 'Pacifico', Georgia, serif;
 }
 
 p {
@@ -32,12 +42,12 @@ pre {
 
 .tweet-list.stream-items {
     position: relative;
-    background-color: #FFF;
+    background-color: #fff;
     list-style: none;
-    color: #555;
+    color: #333;
     font-size: 14px;
     line-height: 18px;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-family: arial, sans-serif;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
